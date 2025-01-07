@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<InthinkTech.Models.User>;
 @{
     ViewData["Title"] = "Admin Dashboard";
 }
@@ -21,7 +21,7 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f6f9;
-            height: 100vh;
+            height: 120vh;
             padding-top: 20px; /* Space for fixed logout button */
             position: relative;
         }
@@ -53,17 +53,19 @@
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             margin-top: 80px; /* Space for logout button */
+
         }
 
         h2 {
             color: #333;
+            
         }
 
         /* Some basic content styling */
         .admin-content {
             margin-top: 20px;
             font-size: 16px;
-            color: #555;
+            color: #555;   
         }
     </style>
 </head>
@@ -84,10 +86,89 @@
             }
             else
             {
-                <p>Welcome to Admin Dashboard. Add more content here.</p>
+              
+                <!-- Buttons to create user and delete user -->
+                <div>
+                    <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-primary">Create User</a>
+                </div>
+
+                <h3>Users</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>@user.Id</td>
+                                <td>@user.Username</td>
+                                <td>@user.FirstName</td>
+                                <td>@user.LastName</td>
+                                <td>@user.Role</td>
+                                <td>
+                                    <a href="@Url.Action("EditUser", "Admin", new { id = user.Id })" class="btn btn-warning">Edit</a>
+                                    <button class="btn btn-danger" onclick="confirmDelete('@Url.Action("DeleteUser", "Admin", new { id = user.Id })')">Delete</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             }
         </div>
     </div>
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Do you confirm to delete?</h3>
+            <button id="confirmDeleteBtn" class="btn btn-danger">Yes</button>
+            <button class="btn btn-secondary" id="cancelDeleteBtn">No</button>
+        </div>
+    </div>
+    <script>
+        // Get the modal and buttons
+        var modal = document.getElementById("deleteModal");
+        var confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+        var cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+        var closeModal = document.getElementsByClassName("close")[0];
+
+        var deleteUrl = "";
+
+        // Function to open the modal and set the delete URL
+        function confirmDelete(url) {
+            deleteUrl = url; // Store the URL of the delete action
+            modal.style.display = "block"; // Show the modal
+        }
+
+        // When the user clicks "Yes", proceed with the delete action
+        confirmDeleteBtn.onclick = function () {
+            window.location.href = deleteUrl; // Redirect to the delete action
+        }
+
+        // When the user clicks "No", close the modal
+        cancelDeleteBtn.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks on the close (x), close the modal
+        closeModal.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 
 </body>
 </html>

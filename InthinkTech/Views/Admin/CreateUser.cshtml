@@ -1,0 +1,41 @@
+﻿@model InthinkTech.Models.User
+
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<h2>Create User</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="UserName">Username</label>
+        <input type="text" class="form-control" id="Username" name="Username" value="@Model.Username" required />
+    </div>
+    
+    <div class="form-group">
+        <label for="Password">Password</label>
+        <input type="text" class="form-control" id="Password" name="Password" value="@Model.Password" required />
+    </div>
+    <div class="form-group">
+        <label for="Role">Role</label>
+        <select id="Role" name="Role" class="form-control" required>
+            <option value="">-- Select Role --</option>
+            <option value="Admin" >Admin</option>
+            <option value="Supervisor" >Supervisor</option>
+            <option value="Manufacturer" >Manufacturer</option>
+            <option value="Operator">Operator</option>
+        </select>
+        
+    </div>
+    <div class="form-group">
+        <label for="FirstName">First Name</label>
+        <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" required />
+    </div>
+    <div class="form-group">
+        <label for="LastName">Last Name</label>
+        <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" required />
+    </div>
+    
+    <button type="submit" class="btn btn-success">Create</button>
+    <a href="@Url.Action("Index", "Admin")" class="btn btn-secondary">Cancel</a>
+</form>
