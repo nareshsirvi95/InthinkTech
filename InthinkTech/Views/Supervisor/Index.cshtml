@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Supervisor Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            height: 100vh;
+            padding-top: 20px; /* Space for fixed logout button */
+            position: relative;
+        }
+
+        /* Fixed Logout Button */
+        .logout-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .logout-button:hover {
+                color: red;
+            }
+
+        /* Main Content Area */
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 80px; /* Space for logout button */
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        /* Some basic content styling */
+        .admin-content {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Logout Button -->
+    <a href="/Home/Logout" class="logout-button">Logout</a>
+
+    <!-- Main Content Area -->
+    <div class="content-container">
+        <h2>@ViewData["Title"]</h2>
+
+        <div class="admin-content">
+            <!-- Dynamically render any content from ViewData -->
+            @if (ViewData["Content"] != null)
+            {
+                <p>@ViewData["Content"]</p>
+            }
+            else
+            {
+                <p>Welcome to the Supervisor Dashboard. Add more content here.</p>
+            }
+        </div>
+    </div>
+
+</body>
+</html>
